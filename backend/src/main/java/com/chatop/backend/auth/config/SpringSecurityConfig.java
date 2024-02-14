@@ -52,11 +52,12 @@ public class SpringSecurityConfig {
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/login**",  "/authi").permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/auth**", "/auth/*", "/auth/register", "/auth/login").permitAll()
+                        .anyRequest().authenticated()
                         )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .userDetailsService(myUserDetailsService)
+                .formLogin(withDefaults())
                 .httpBasic(withDefaults())
                 .build();
     }

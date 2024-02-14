@@ -1,16 +1,14 @@
 package com.chatop.backend.auth.controller;
 
 import com.chatop.backend.auth.service.TokenService;
-import com.chatop.backend.dtos.RegistrationDTO;
-import com.chatop.backend.dtos.TextResponseDTO;
-import com.chatop.backend.dtos.TokenDTO;
-import com.chatop.backend.dtos.UserDTO;
+import com.chatop.backend.dtos.*;
 import com.chatop.backend.mappers.UserMapper;
 import com.chatop.backend.models.User;
 import com.chatop.backend.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,10 +32,11 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDTO> token(Authentication authentication) {
-        log.debug("Token requested for user : " + authentication.getName());
-        String token = tokenService.generateToken(authentication);
-        log.debug("Token granted : " + token);
+    public ResponseEntity<TokenDTO> token(@RequestBody LoginDTO dto) {
+        log.debug("Token requested for user : " + dto.getLogin());
+        Authentication authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(dto.getLogin(), dto.getPassword());
+        String token = tokenService.generateToken(authenticationRequest);
+        log.info("Token granted : " + token + "for user : " + dto.getLogin());
 
         return ResponseEntity.ok(new TokenDTO(token));
 
