@@ -109,4 +109,8 @@ public class UserService implements UserDetailsService {
   public User registerUser(RegistrationDTO dto) {
     return createUser(new UserDTO(null, dto.getName(), dto.getEmail(), dto.getPassword(), LocalDateTime.now(), LocalDateTime.now(), null, null));
   }
+
+  public User findByEmail(String email) {
+    return userMapper.entityToModel(userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("No user with this email")));
+  }
 }

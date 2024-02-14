@@ -49,16 +49,19 @@ public class LoginController {
 
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_USER', 'SCOPE_ROLE_ADMIN', 'SCOPE_OAUTH2_USER')")
     @GetMapping("/me")
-    public ResponseEntity<TextResponseDTO> getUser(@RequestHeader("Authorization") String requestTokenHeader) {
+    public ResponseEntity<UserInfoDTO> getUser(@RequestHeader("Authorization") String requestTokenHeader) {
         log.info("User");
-        return ResponseEntity.ok(new TextResponseDTO("Hi " + tokenService.decodeTokenUsername(requestTokenHeader)));
+        UserDTO response = userMapper.modelToDto(userService.findByEmail(tokenService.decodeTokenUsername(requestTokenHeader)));
+        response.setPassword(null);
+        return ResponseEntity.ok(userMapper.dtoToUserInfoDto(response));
 
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> register(@RequestBody RegistrationDTO dto){
+    public ResponseEntity<TokenDTO> register(@RequestBody RegistrationDTO dto){
         User createdUser = userService.registerUser(dto);
-        return ResponseEntity.ok(userMapper.modelToDto(createdUser) );
+
+        return this.token(new LoginDTO(createdUser.getEmail(), createdUser.getPassword()));
     }
 
 

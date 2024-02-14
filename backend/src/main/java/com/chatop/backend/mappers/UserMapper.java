@@ -1,5 +1,6 @@
 package com.chatop.backend.mappers;
 
+import com.chatop.backend.dtos.UserInfoDTO;
 import com.chatop.backend.helpers.CycleAvoidingMappingContext;
 import org.mapstruct.*;
 
@@ -33,4 +34,6 @@ public interface UserMapper {
 	void updateFromModel(User model, @MappingTarget UserEntity entity, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 
 	void updateFromDto(UserDTO dto, @MappingTarget User model, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+
+  UserInfoDTO dtoToUserInfoDto(UserDTO dto);
 }
