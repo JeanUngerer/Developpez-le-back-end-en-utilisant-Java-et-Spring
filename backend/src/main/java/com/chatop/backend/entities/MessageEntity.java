@@ -31,12 +31,10 @@ public class MessageEntity {
   @Column(name = "updated_at", nullable = false)
   LocalDateTime updated_at;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "rental_id")
-  RentalEntity rental;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
+  @ManyToOne
   UserEntity user;
+
+  @ManyToOne
+  RentalEntity rental;
 
 }

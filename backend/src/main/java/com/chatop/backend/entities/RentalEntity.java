@@ -44,11 +44,10 @@ public class RentalEntity {
   @Column(name = "updated_at", nullable = false)
   LocalDateTime updated_at;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "owner_id")
-  UserEntity owner;
-
   @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "message_id")
+  @JoinColumn(name = "rental_id")
   List<MessageEntity> messages;
+
+  @ManyToOne
+  UserEntity owner;
 }

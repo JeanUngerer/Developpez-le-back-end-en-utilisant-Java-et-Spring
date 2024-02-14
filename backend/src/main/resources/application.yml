@@ -1,0 +1,26 @@
+
+server:
+  port: 8090
+  servlet:
+    context-path:  /api/
+spring:
+
+
+
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:mysql://localhost:3306/projet3OC?createDatabaseIfNotExist=true
+    username: root
+    password: admin
+
+
+
+logging:
+  file:
+    name: logs/logfile.log
+  pattern:
+    file: "%d %p %c{1.} [%t] %m%n"

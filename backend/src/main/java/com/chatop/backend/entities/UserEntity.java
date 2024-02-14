@@ -38,10 +38,10 @@ public class UserEntity {
   LocalDateTime updated_at;
 
   @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "rental_id")
+  @JoinColumn(name = "owner_id")
   List<RentalEntity> rentals;
 
   @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "message_id")
+  @JoinColumn(name = "user_id")
   List<MessageEntity> messages;
 }
