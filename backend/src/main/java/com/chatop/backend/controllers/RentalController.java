@@ -45,7 +45,7 @@ public class RentalController {
 	}
 
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
-	@PostMapping("/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<RentalDTO> update(@RequestBody RentalDTO rentalDto, @PathVariable("id") Long id) {
     rentalDto.setId(id);
 		return ResponseEntity.ok(rentalMapper.modelToDto(rentalService.updateRental(rentalDto)));

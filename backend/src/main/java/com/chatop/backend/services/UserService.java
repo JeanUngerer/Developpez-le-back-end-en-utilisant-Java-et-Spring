@@ -1,6 +1,8 @@
 package com.chatop.backend.services;
 
+import com.chatop.backend.dtos.RegistrationDTO;
 import com.chatop.backend.dtos.UserDTO;
+import com.chatop.backend.entities.UserEntity;
 import com.chatop.backend.exception.ExceptionHandler;
 import com.chatop.backend.helpers.CycleAvoidingMappingContext;
 import com.chatop.backend.mappers.UserMapper;
@@ -10,8 +12,14 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +28,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Log4j2
 @Transactional
-public class UserService {
+public class UserService implements UserDetailsService {
 
 	UserRepository userRepository;
 
@@ -88,4 +96,17 @@ public class UserService {
 			throw new ExceptionHandler("We could not delete your user");
 		}
 	}
+
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    UserEntity userEntity = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("No user with this email"));
+    User myUser = userMapper.entityToModel(userEntity);
+    List<SimpleGrantedAuthority> authi = new ArrayList<>();
+    authi.add(new SimpleGrantedAuthority("SCOPE_ROLE_ADMIN"));
+    return new org.springframework.security.core.userdetails.User(myUser.getEmail(), myUser.getPassword(), authi);
+  }
+
+  public User registerUser(RegistrationDTO dto) {
+    return createUser(new UserDTO(null, dto.getName(), dto.getEmail(), dto.getPassword(), LocalDateTime.now(), LocalDateTime.now(), null, null));
+  }
 }
