@@ -5,7 +5,6 @@ package com.chatop.backend.auth.config;
 import com.chatop.backend.services.UserService;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -32,8 +31,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Setter
 public class SpringSecurityConfig {
 
-    private static List<String> clients = Arrays.asList("github");
-
     private final PasswordEncoder encoder;
 
 
@@ -52,7 +49,7 @@ public class SpringSecurityConfig {
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth**", "/auth/*", "/register", "/auth/login").permitAll()
+                        .requestMatchers("/auth**", "/auth/*", "/register", "/auth/login", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                         )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

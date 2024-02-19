@@ -1,8 +1,11 @@
 package com.chatop.backend.controllers;
 
+import com.chatop.backend.auth.service.TokenService;
+import com.chatop.backend.dtos.CreateRentalDTO;
 import com.chatop.backend.dtos.RentalDTO;
 import com.chatop.backend.mappers.RentalMapper;
 import com.chatop.backend.services.RentalService;
+import com.chatop.backend.services.UserService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,6 +27,10 @@ public class RentalController {
 	@Autowired
 	RentalService rentalService;
 
+  UserService userService;
+
+  TokenService tokenService;
+
 	private RentalMapper rentalMapper;
 
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
@@ -40,7 +47,8 @@ public class RentalController {
 
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
 	@PostMapping("")
-	public ResponseEntity<RentalDTO> create(@RequestBody RentalDTO rentalDto) {
+	public ResponseEntity<RentalDTO> create(@RequestHeader("Authorization") String requestTokenHeader, @ModelAttribute CreateRentalDTO rentalDto) {
+    rentalDto.setOwner(userService.findByEmail(tokenService.decodeTokenUsername(requestTokenHeader)));
 		return ResponseEntity.ok(rentalMapper.modelToDto(rentalService.createRental(rentalDto)));
 	}
 
@@ -48,6 +56,7 @@ public class RentalController {
 	@PutMapping("/{id}")
 	public ResponseEntity<RentalDTO> update(@RequestBody RentalDTO rentalDto, @PathVariable("id") Long id) {
     rentalDto.setId(id);
+    rentalDto.setMessages(null);
 		return ResponseEntity.ok(rentalMapper.modelToDto(rentalService.updateRental(rentalDto)));
 	}
 

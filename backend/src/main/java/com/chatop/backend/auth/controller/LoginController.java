@@ -33,10 +33,10 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenDTO> token(@RequestBody LoginDTO dto) {
-        log.debug("Token requested for user : " + dto.getLogin());
-        Authentication authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(dto.getLogin(), dto.getPassword());
+        log.debug("Token requested for user : " + dto.getEmail());
+        Authentication authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(dto.getEmail(), dto.getPassword());
         String token = tokenService.generateToken(authenticationRequest);
-        log.info("Token granted : " + token + "for user : " + dto.getLogin());
+        log.info("Token granted : " + token + "  -  For user : " + dto.getEmail());
 
         return ResponseEntity.ok(new TokenDTO(token));
 
@@ -50,9 +50,13 @@ public class LoginController {
     @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_USER', 'SCOPE_ROLE_ADMIN', 'SCOPE_OAUTH2_USER')")
     @GetMapping("/me")
     public ResponseEntity<UserInfoDTO> getUser(@RequestHeader("Authorization") String requestTokenHeader) {
-        log.info("User");
-        UserDTO response = userMapper.modelToDto(userService.findByEmail(tokenService.decodeTokenUsername(requestTokenHeader)));
-        response.setPassword(null);
+      String username = tokenService.decodeTokenUsername(requestTokenHeader);
+
+      User uer = userService.findByEmail(username);
+      UserDTO response = userMapper.modelToDto(uer);
+
+
+        //response.setPassword(null);
         return ResponseEntity.ok(userMapper.dtoToUserInfoDto(response));
 
     }

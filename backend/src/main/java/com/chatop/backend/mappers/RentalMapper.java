@@ -1,36 +1,92 @@
 package com.chatop.backend.mappers;
 
-import com.chatop.backend.helpers.CycleAvoidingMappingContext;
-import org.mapstruct.*;
-
-import com.chatop.backend.entities.RentalEntity;
+import com.chatop.backend.dtos.CreateRentalDTO;
+import com.chatop.backend.dtos.MessageDTO;
 import com.chatop.backend.dtos.RentalDTO;
+import com.chatop.backend.entities.RentalEntity;
+import com.chatop.backend.helpers.CycleAvoidingMappingContext;
+import com.chatop.backend.models.Message;
 import com.chatop.backend.models.Rental;
+import org.mapstruct.*;
 
 import java.util.List;
 
 @Mapper(unmappedSourcePolicy = ReportingPolicy.WARN, unmappedTargetPolicy = ReportingPolicy.WARN,
-	typeConversionPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+  typeConversionPolicy = ReportingPolicy.IGNORE, componentModel = "spring", uses = {UserMapper.class, MessageMapper.class})
+@Named("RentalMapper")
 public interface RentalMapper {
 
-	RentalDTO modelToDto(Rental model);
+  //@Mapping(source = "owner",target = "owner", qualifiedByName = {"UserMapper", "toDtoWithoutRentals"})
+  RentalDTO modelToDto(Rental model);
 
-	List<RentalDTO> modelsToDtos(List<Rental> models);
 
-	Rental dtoToModel(RentalDTO dto);
+  List<RentalDTO> modelsToDtos(List<Rental> models);
 
-	List<Rental> dtosToModels(List<RentalDTO> dtos);
+  //@Mapping(source = "owner",target = "owner", qualifiedByName = {"UserMapper", "toModelFromDtoWithoutRentals"})
+  Rental dtoToModel(RentalDTO dto);
 
-	RentalEntity modelToEntity(Rental model);
 
-	List<RentalEntity> modelsToEntities(List<Rental> models);
+  List<Rental> dtosToModels(List<RentalDTO> dtos);
 
-	Rental entityToModel(RentalEntity entity);
+  @Mapping(source = "owner", target = "owner", qualifiedByName = {"UserMapper", "toEntityWithoutRentals"})
+  RentalEntity modelToEntity(Rental model);
 
-	List<Rental> entitiesToModel(List<RentalEntity> entities);
 
-	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-	void updateFromModel(Rental model, @MappingTarget RentalEntity entity, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+  List<RentalEntity> modelsToEntities(List<Rental> models);
 
-	void updateFromDto(RentalDTO dto, @MappingTarget Rental model, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+  @Mapping(source = "owner", target = "owner", qualifiedByName = {"UserMapper", "toModelWithoutRentals"})
+  Rental entityToModel(RentalEntity entity);
+
+
+  List<Rental> entitiesToModel(List<RentalEntity> entities);
+
+  @Named("createDtoToDto")
+  @Mapping(target = "picture", ignore = true)
+  RentalDTO createDtoToDto(CreateRentalDTO createDto);
+
+  @Named("toModelWithoutMessages")
+  @Mapping(target = "messages", ignore = true)
+  Rental toModelWithoutMessages(RentalEntity entity);
+
+  @Named("modeltoModelWithoutMessages")
+  @Mapping(target = "messages", ignore = true)
+  Rental modeltoModelWithoutMessages(Rental model);
+
+
+  @Named("toEntityWithoutMessages")
+  @Mapping(target = "messages", ignore = true)
+  RentalEntity toEntityWithoutMessages(Rental model);
+
+  @Named("toDtoWithoutMessages")
+  @Mapping(target = "messages", ignore = true)
+  RentalDTO toDtoWithoutMessages(Rental model);
+
+  @Named("toModelFromDtoWithoutMessages")
+  @Mapping(target = "messages", ignore = true)
+  Rental toModelFromDtoWithoutMessages(RentalDTO dto);
+
+
+
+  @Named("toModelsWithoutMessages")
+  @Mapping(target = ".", qualifiedByName = "toModelWithoutMessages")
+  List<Rental> toModelsWithoutMessages(List<RentalEntity> entities);
+
+  @Named("toModelsFromDtosWithoutMessages")
+  @Mapping(target = ".", qualifiedByName = "toModelFromDtoWithoutMessages")
+  List<Rental> toModelsFromDtosWithoutMessages(List<RentalDTO> dtos);
+
+  @Named("toEntitiesWithoutMessages")
+  @Mapping(target = ".", qualifiedByName = "toEntityWithoutMessages")
+  List<RentalEntity> toEntitiesWithoutMessages(List<Rental> models);
+
+  @Named("toDtosWithoutMessages")
+  @Mapping(target = ".", qualifiedByName = "toDtoWithoutMessages")
+  List<RentalDTO> toDtosWithoutMessages(List<Rental> models);
+
+
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void updateFromModel(Rental model, @MappingTarget RentalEntity entity, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void updateFromDto(RentalDTO dto, @MappingTarget Rental model, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 }

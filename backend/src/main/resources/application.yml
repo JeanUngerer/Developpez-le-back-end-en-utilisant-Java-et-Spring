@@ -1,15 +1,21 @@
 
 server:
   port: 8080
-spring:
+  servlet:
+    context-path: /api/
 
+app:
+  base:
+    path: /dev_school_projects/project3OC/pictures/
+
+spring:
 
 
   jpa:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   datasource:
     url: jdbc:mysql://localhost:3306/projet3OC?createDatabaseIfNotExist=true
     username: root

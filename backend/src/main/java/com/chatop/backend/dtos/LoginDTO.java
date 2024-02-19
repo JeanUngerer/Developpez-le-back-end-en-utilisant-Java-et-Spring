@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 public class LoginDTO {
 
-  String login;
+  String email;
   String password;
 
 }
