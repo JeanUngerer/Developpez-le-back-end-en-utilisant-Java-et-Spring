@@ -1,6 +1,7 @@
 package com.chatop.backend.controllers;
 
 import com.chatop.backend.dtos.MessageDTO;
+import com.chatop.backend.dtos.TextResponseDTO;
 import com.chatop.backend.mappers.MessageMapper;
 import com.chatop.backend.services.MessageService;
 import lombok.AccessLevel;
@@ -40,8 +41,9 @@ public class MessageController {
 
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
 	@PostMapping("")
-	public ResponseEntity<MessageDTO> create(@RequestBody MessageDTO messageDto) {
-		return ResponseEntity.ok(messageMapper.modelToDto(messageService.createMessage(messageDto)));
+	public ResponseEntity<TextResponseDTO> create(@RequestBody MessageDTO messageDto) {
+    messageService.createMessage(messageDto);
+		return ResponseEntity.ok(new TextResponseDTO("Message send with success"));
 	}
 
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")

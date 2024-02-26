@@ -3,6 +3,8 @@ package com.chatop.backend.controllers;
 import com.chatop.backend.auth.service.TokenService;
 import com.chatop.backend.dtos.CreateRentalDTO;
 import com.chatop.backend.dtos.RentalDTO;
+import com.chatop.backend.dtos.RentalsDTO;
+import com.chatop.backend.dtos.TextResponseDTO;
 import com.chatop.backend.mappers.RentalMapper;
 import com.chatop.backend.services.RentalService;
 import com.chatop.backend.services.UserService;
@@ -35,8 +37,8 @@ public class RentalController {
 
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
 	@GetMapping("")
-	public ResponseEntity<List<RentalDTO>> getRentals() {
-		return ResponseEntity.ok(rentalMapper.modelsToDtos(rentalService.findAllRental()));
+	public ResponseEntity<RentalsDTO> getRentals() {
+		return ResponseEntity.ok(new RentalsDTO(rentalMapper.modelsToDtos(rentalService.findAllRental())));
 	}
 
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
@@ -47,17 +49,18 @@ public class RentalController {
 
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
 	@PostMapping("")
-	public ResponseEntity<RentalDTO> create(@RequestHeader("Authorization") String requestTokenHeader, @ModelAttribute CreateRentalDTO rentalDto) {
+	public ResponseEntity<TextResponseDTO> create(@RequestHeader("Authorization") String requestTokenHeader, @ModelAttribute CreateRentalDTO rentalDto) {
     rentalDto.setOwner(userService.findByEmail(tokenService.decodeTokenUsername(requestTokenHeader)));
-		return ResponseEntity.ok(rentalMapper.modelToDto(rentalService.createRental(rentalDto)));
+    rentalService.createRental(rentalDto);
+		return ResponseEntity.ok(new TextResponseDTO("Rental created !"));
 	}
 
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
 	@PutMapping("/{id}")
-	public ResponseEntity<RentalDTO> update(@RequestBody RentalDTO rentalDto, @PathVariable("id") Long id) {
+	public ResponseEntity<TextResponseDTO> update(@RequestBody RentalDTO rentalDto, @PathVariable("id") Long id) {
     rentalDto.setId(id);
-    rentalDto.setMessages(null);
-		return ResponseEntity.ok(rentalMapper.modelToDto(rentalService.updateRental(rentalDto)));
+    rentalService.updateRental(rentalDto);
+		return ResponseEntity.ok(new TextResponseDTO("Rental updated !"));
 	}
 
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")

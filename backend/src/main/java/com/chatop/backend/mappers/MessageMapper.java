@@ -80,6 +80,15 @@ public interface MessageMapper {
   @Mapping(source = "rental", target = "rental", ignore = true)
   Message toModelFromDtoWithoutRentalsAndUsers(MessageDTO dto);
 
+  @Named("modelsToModelsWithoutRentalsAndUsers")
+  @Mapping(target = ".", qualifiedByName = "modelToModelWithoutRentalsAndUsers")
+  List<Message> modelsToModelsWithoutRentalsAndUsers(List<Message> models);
+
+  @Named("modelToModelWithoutRentalsAndUsers")
+  @Mapping(source = "user", target = "user", ignore = true)
+  @Mapping(source = "rental", target = "rental", ignore = true)
+  Message modelToModelWithoutRentalsAndUsers(Message model);
+
 
 	List<Message> entitiesToModel(List<MessageEntity> entities);
 

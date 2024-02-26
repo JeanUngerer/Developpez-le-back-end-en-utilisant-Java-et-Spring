@@ -15,10 +15,12 @@ public class APIExceptionHandler {
         APIException exception = new APIException(
                 e.getMessage(),
                 e,
-                HttpStatus.BAD_REQUEST,
+                e.getHttpStatus() != null ? e.getHttpStatus() : HttpStatus.BAD_REQUEST,
                 ZonedDateTime.now(ZoneId.of("Z"))
         );
 
-        return new ResponseEntity<>(exception, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exception, exception.getHttpStatus());
     }
+
+
 }

@@ -1,7 +1,6 @@
 package com.chatop.backend.mappers;
 
 import com.chatop.backend.dtos.CreateRentalDTO;
-import com.chatop.backend.dtos.MessageDTO;
 import com.chatop.backend.dtos.RentalDTO;
 import com.chatop.backend.entities.RentalEntity;
 import com.chatop.backend.helpers.CycleAvoidingMappingContext;
@@ -16,13 +15,13 @@ import java.util.List;
 @Named("RentalMapper")
 public interface RentalMapper {
 
-  //@Mapping(source = "owner",target = "owner", qualifiedByName = {"UserMapper", "toDtoWithoutRentals"})
+  @Mapping(source = "owner.id",target = "owner_id")
   RentalDTO modelToDto(Rental model);
 
 
   List<RentalDTO> modelsToDtos(List<Rental> models);
 
-  //@Mapping(source = "owner",target = "owner", qualifiedByName = {"UserMapper", "toModelFromDtoWithoutRentals"})
+  //@Mapping(target = "owner", ignore = true)
   Rental dtoToModel(RentalDTO dto);
 
 
@@ -42,7 +41,7 @@ public interface RentalMapper {
 
   @Named("createDtoToDto")
   @Mapping(target = "picture", ignore = true)
-  RentalDTO createDtoToDto(CreateRentalDTO createDto);
+  Rental createDtoToModel(CreateRentalDTO createDto);
 
   @Named("toModelWithoutMessages")
   @Mapping(target = "messages", ignore = true)
@@ -58,7 +57,6 @@ public interface RentalMapper {
   RentalEntity toEntityWithoutMessages(Rental model);
 
   @Named("toDtoWithoutMessages")
-  @Mapping(target = "messages", ignore = true)
   RentalDTO toDtoWithoutMessages(Rental model);
 
   @Named("toModelFromDtoWithoutMessages")
@@ -82,6 +80,16 @@ public interface RentalMapper {
   @Named("toDtosWithoutMessages")
   @Mapping(target = ".", qualifiedByName = "toDtoWithoutMessages")
   List<RentalDTO> toDtosWithoutMessages(List<Rental> models);
+
+
+
+  @Named("modelsToModelsWithoutMessages")
+  @Mapping(target = ".", qualifiedByName = "modelToModelWithoutMessages")
+  List<Rental> modelsToModelsWithoutMessages(List<Rental> models);
+
+  @Named("modelToModelWithoutMessages")
+  @Mapping(source = "messages", target = "messages", ignore = true)
+  Rental modelToModelWithoutMessages(Rental model);
 
 
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

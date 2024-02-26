@@ -9,7 +9,8 @@ app:
     path: /dev_school_projects/project3OC/pictures/
 
 spring:
-
+  main:
+    allow-circular-references: true
 
   jpa:
     generate-ddl: true

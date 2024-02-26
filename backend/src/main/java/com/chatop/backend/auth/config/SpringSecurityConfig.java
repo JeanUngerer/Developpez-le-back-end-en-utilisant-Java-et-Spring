@@ -49,7 +49,7 @@ public class SpringSecurityConfig {
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth**", "/auth/*", "/register", "/auth/login", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/auth**", "/auth/*", "/register", "/auth/login", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                         )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

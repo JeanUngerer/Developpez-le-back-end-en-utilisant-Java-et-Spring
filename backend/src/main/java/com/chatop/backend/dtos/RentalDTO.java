@@ -27,7 +27,6 @@ Double surface;
 Double price;
 LocalDateTime created_at;
 LocalDateTime updated_at;
-List<Message> messages;
-User owner;
+Long owner_id;
 
 }
