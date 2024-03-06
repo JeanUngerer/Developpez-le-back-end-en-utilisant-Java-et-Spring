@@ -1,7 +1,6 @@
 package com.chatop.backend.dtos;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import com.chatop.backend.models.Rental;
 import com.chatop.backend.models.User;
