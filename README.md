@@ -28,7 +28,7 @@ Make sure you have a local instance of mysql80 running on port 3306
 
 Setup your MY_SQL_PASSWORD and MY_SQL_USERNAME environment variables or replace these in the application.yml file with your MySql username and password strings.
 
-For testing purposes, the database is emptied every time you run the app 
+For testing purposes, the database is emptied every time you run the app you dont have to run any sql script to build all tables, all is done by hibernate
 
     hibernate:
       ddl-auto: create-drop
@@ -44,6 +44,12 @@ Build project
 
 Run project
 > mvn spring-boot:run
+
+
+Project runs at 
+```localhost:8080```
+
+Swagger ui available at ```http://localhost:8080/api/swagger-ui/index.html```
 
 ## Ressources
 
