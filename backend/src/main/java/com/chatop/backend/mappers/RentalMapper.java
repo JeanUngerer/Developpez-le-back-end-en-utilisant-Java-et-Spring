@@ -4,7 +4,6 @@ import com.chatop.backend.dtos.CreateRentalDTO;
 import com.chatop.backend.dtos.RentalDTO;
 import com.chatop.backend.entities.RentalEntity;
 import com.chatop.backend.helpers.CycleAvoidingMappingContext;
-import com.chatop.backend.models.Message;
 import com.chatop.backend.models.Rental;
 import org.mapstruct.*;
 
