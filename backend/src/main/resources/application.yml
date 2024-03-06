@@ -16,11 +16,11 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   datasource:
     url: jdbc:mysql://localhost:3306/projet3OC?createDatabaseIfNotExist=true
-    username: root
-    password: admin
+    username: ${MY_SQL_USERNAME}
+    password: ${MY_SQL_PASSWORD}
 
 rsa:
   private-key: classpath:certs/private.pem
