@@ -1,10 +1,6 @@
 package com.chatop.backend.dtos;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
-import com.chatop.backend.models.Message;
-import com.chatop.backend.models.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
