@@ -1,7 +1,6 @@
 package com.chatop.backend.models;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.Getter;
