@@ -26,7 +26,7 @@ Launch Front-end:
 
 Make sure you have a local instance of mysql80 running on port 3306
 
-Setup your MY_SQL_PASSWORD and MY_SQL_USERNAME environment variables or replace these in the application.yml file with your MySql username and password strings.
+Setup your database username and password in the application.yml file with your MySql username and password strings.
 
 For testing purposes, the database is emptied every time you run the app you dont have to run any sql script to build all tables, all is done by hibernate
 

@@ -20,8 +20,8 @@ spring:
       dialect: org.hibernate.dialect.MySQL5Dialect
   datasource:
     url: jdbc:mysql://localhost:3306/projet3OC?createDatabaseIfNotExist=true
-    username: ${MY_SQL_USERNAME}
-    password: ${MY_SQL_PASSWORD}
+    username: root
+    password: admin1
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 rsa:
