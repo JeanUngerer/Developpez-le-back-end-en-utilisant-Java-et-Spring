@@ -18,11 +18,11 @@ spring:
     hibernate:
       ddl-auto: create-drop
       #dialect: org.hibernate.dialect.MySQL5Dialect
-    #database-platform: org.hibernate.dialect.MySQL5Dialect
+
   datasource:
     url: jdbc:mysql://localhost:3306/projet3OC?createDatabaseIfNotExist=true
-    username: root
-    password: admin1
+    username: ${MY_SQL_USERNAME:root}
+    password: ${MY_SQL_PASSWORD:admin1}
     #driver-class-name: com.mysql.cj.jdbc.Driver
 
 rsa:
