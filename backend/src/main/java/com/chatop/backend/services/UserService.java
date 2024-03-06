@@ -1,6 +1,5 @@
 package com.chatop.backend.services;
 
-import com.chatop.backend.auth.config.PasswordConfig;
 import com.chatop.backend.dtos.RegistrationDTO;
 import com.chatop.backend.dtos.UserDTO;
 import com.chatop.backend.entities.UserEntity;
