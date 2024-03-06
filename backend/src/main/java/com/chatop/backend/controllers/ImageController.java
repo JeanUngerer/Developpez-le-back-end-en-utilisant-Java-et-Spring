@@ -1,7 +1,6 @@
 package com.chatop.backend.controllers;
 
 import com.chatop.backend.services.ImageService;
-import com.nimbusds.jose.util.IOUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
