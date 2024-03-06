@@ -8,6 +8,8 @@ Git clone:
 
 > git clone https://github.com/OpenClassrooms-Student-Center/P3-Full-Stack-portail-locataire
 
+
+### Front
 Go inside folder:
 
 > cd P3-Full-Stack-portail-locataire
@@ -19,7 +21,29 @@ Install dependencies:
 Launch Front-end:
 
 > npm run start;
+> 
+### Back
 
+Make sure you have a local instance of mysql80 running on port 3306
+
+Setup your MY_SQL_PASSWORD and MY_SQL_USERNAME environment variables or replace these in the application.yml file with your MySql username and password strings.
+
+For testing purposes, the database is emptied every time you run the app 
+
+    hibernate:
+      ddl-auto: create-drop
+
+
+
+Go to backend folder
+
+> cd backend
+
+Build project
+> mvn package
+
+Run project
+> mvn spring-boot:run
 
 ## Ressources
 
