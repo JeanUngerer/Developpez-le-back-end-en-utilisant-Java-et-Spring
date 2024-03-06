@@ -71,6 +71,7 @@ public class SpringSecurityConfig {
 
         configuration.setAllowedOrigins( Collections.singletonList( "http://localhost:4200" ) );
         configuration.addAllowedOrigin ( "http://localhost:8080" );
+        configuration.addAllowedOriginPattern ( "*" );
 
         source.registerCorsConfiguration("/**",configuration);
         return source;
