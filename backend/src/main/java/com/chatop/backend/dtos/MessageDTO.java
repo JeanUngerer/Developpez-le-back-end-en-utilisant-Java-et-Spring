@@ -22,7 +22,7 @@ Long id;
 String message;
 LocalDateTime created_at;
 LocalDateTime updated_at;
-User user;
-Rental rental;
+Long user_id;
+Long rental_id;
 
 }

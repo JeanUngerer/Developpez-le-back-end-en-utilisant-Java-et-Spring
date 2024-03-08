@@ -39,7 +39,6 @@ public class LoginController {
         log.info("Token granted : " + token + "  -  For user : " + dto.getEmail());
 
         return ResponseEntity.ok(new TokenDTO(token));
-
     }
 
     @GetMapping("/home")
@@ -47,7 +46,7 @@ public class LoginController {
         return ResponseEntity.ok(new TextResponseDTO("Hi home !"));
     }
 
-    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_USER', 'SCOPE_ROLE_ADMIN', 'SCOPE_OAUTH2_USER')")
+
     @GetMapping("/me")
     public ResponseEntity<UserInfoDTO> getUser(@RequestHeader("Authorization") String requestTokenHeader) {
       String username = tokenService.decodeTokenUsername(requestTokenHeader);
@@ -55,9 +54,7 @@ public class LoginController {
       User uer = userService.findByEmail(username);
       UserDTO response = userMapper.modelToDto(uer);
 
-
-        //response.setPassword(null);
-        return ResponseEntity.ok(userMapper.dtoToUserInfoDto(response));
+      return ResponseEntity.ok(userMapper.dtoToUserInfoDto(response));
 
     }
 

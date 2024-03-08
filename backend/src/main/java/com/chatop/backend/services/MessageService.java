@@ -12,6 +12,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,10 @@ public class MessageService {
 	MessageRepository messageRepository;
 
 	MessageMapper messageMapper;
+
+  UserService userService;
+
+  RentalService rentalService;
 
 	public List<Message> findAllMessage() {
 		try {
@@ -54,6 +60,10 @@ public class MessageService {
 		try {
 			log.info("createMessage");
 			Message message = messageMapper.dtoToModel(dto);
+      message.setRental(rentalService.findRentalById(dto.getRental_id()));
+      message.setUser(userService.findUserById(dto.getUser_id()));
+      message.setCreated_at(LocalDateTime.now());
+      message.setUpdated_at(LocalDateTime.now());
 			messageRepository.save(messageMapper.modelToEntity(message));
 			return message;
 		} catch (Exception e) {

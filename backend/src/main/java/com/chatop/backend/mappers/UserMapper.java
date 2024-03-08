@@ -34,8 +34,8 @@ public interface UserMapper {
 
 	List<UserEntity> modelsToEntities(List<User> models);
 
-  @Mapping(source = "messages", target = "messages",  qualifiedByName = {"MessageMapper", "toModelsWithoutRentalsAndUsers"})
-  @Mapping(source = "rentals", target = "rentals",  qualifiedByName = {"RentalMapper", "toModelsWithoutMessages"})
+  @Mapping(source = "messages", target = "messages",  qualifiedByName = {"MessageMapper", "toModelsWithoutRentalsAndUsers"}, ignore = true)
+  @Mapping(source = "rentals", target = "rentals",  qualifiedByName = {"RentalMapper", "toModelsWithoutMessages"}, ignore = true)
 	User entityToModel(UserEntity entity);
 
 	List<User> entitiesToModel(List<UserEntity> entities);

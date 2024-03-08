@@ -55,9 +55,9 @@ public class RentalController {
 
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
 	@PutMapping("/{id}")
-	public ResponseEntity<TextResponseDTO> update(@RequestBody RentalDTO rentalDto, @PathVariable("id") Long id) {
-    rentalDto.setId(id);
-    rentalService.updateRental(rentalDto);
+	public ResponseEntity<TextResponseDTO> update(@ModelAttribute CreateRentalDTO rentalDto, @PathVariable("id") Long id) {
+    //rentalDto.setId(id);
+    rentalService.updateRental(rentalDto, id);
 		return ResponseEntity.ok(new TextResponseDTO("Rental updated !"));
 	}
 

@@ -94,6 +94,7 @@ public interface RentalMapper {
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   void updateFromModel(Rental model, @MappingTarget RentalEntity entity, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 
+  @Mapping(source = "picture", target = "picture", ignore = true)
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   void updateFromDto(RentalDTO dto, @MappingTarget Rental model, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
 }

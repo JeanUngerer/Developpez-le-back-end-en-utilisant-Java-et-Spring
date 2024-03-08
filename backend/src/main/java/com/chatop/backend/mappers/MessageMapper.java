@@ -14,15 +14,15 @@ import java.util.List;
 @Named("MessageMapper")
 public interface MessageMapper {
 
-  @Mapping(target = "rental", qualifiedByName = {"RentalMapper", "modeltoModelWithoutMessages"})
-  @Mapping(target = "user", qualifiedByName = {"UserMapper", "modeltoModelWithoutRentals"})
+  @Mapping(target = "rental_id", qualifiedByName = {"RentalMapper", "modeltoModelWithoutMessages"}, ignore = true)
+  @Mapping(target = "user_id", qualifiedByName = {"UserMapper", "modeltoModelWithoutRentals"}, ignore = true)
 	MessageDTO modelToDto(Message model);
 
 
 	List<MessageDTO> modelsToDtos(List<Message> models);
 
-  @Mapping(target = "rental", qualifiedByName = {"RentalMapper", "modeltoModelWithoutMessages"})
-  @Mapping(target = "user", qualifiedByName = {"UserMapper", "modeltoModelWithoutRentals"})
+  @Mapping(target = "rental", qualifiedByName = {"RentalMapper", "modeltoModelWithoutMessages"}, ignore = true)
+  @Mapping(target = "user", qualifiedByName = {"UserMapper", "modeltoModelWithoutRentals"}, ignore = true)
 	Message dtoToModel(MessageDTO dto);
 
 
@@ -55,8 +55,8 @@ public interface MessageMapper {
   List<MessageDTO> toDtosWithoutRentalsAndUsers(List<Message> models);
 
   @Named("toDtoWithoutRentalsAndUsers")
-  @Mapping(source = "user", target = "user", ignore = true)
-  @Mapping(source = "rental", target = "rental", ignore = true)
+  @Mapping(source = "user.id", target = "user_id")
+  @Mapping(source = "rental.id", target = "rental_id")
   MessageDTO toDtoWithoutRentalsAndUsers(Message model);
 
 
@@ -76,8 +76,8 @@ public interface MessageMapper {
   List<Message> toModelsFromDtosWithoutRentalsAndUsers(List<MessageDTO> dtos);
 
   @Named("toModelFromDtoWithoutRentalsAndUsers")
-  @Mapping(source = "user", target = "user", ignore = true)
-  @Mapping(source = "rental", target = "rental", ignore = true)
+  @Mapping(source = "user_id", target = "user", ignore = true)
+  @Mapping(source = "rental_id", target = "rental", ignore = true)
   Message toModelFromDtoWithoutRentalsAndUsers(MessageDTO dto);
 
   @Named("modelsToModelsWithoutRentalsAndUsers")
