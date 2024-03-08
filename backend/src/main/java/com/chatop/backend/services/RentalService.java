@@ -108,8 +108,8 @@ public class RentalService {
       List<Message> messages = new ArrayList<>();
 
 
-      RentalEntity updatedRentalEntity = new RentalEntity(rentalEntity.getId(), rentalEntity.getName(), rentalEntity.getPicture(),
-        rentalEntity.getDescription(), rentalEntity.getSurface(), rentalEntity.getPrice(), rentalEntity.getCreated_at(), rentalEntity.getUpdated_at(), rentalEntity.getMessages() ,
+      RentalEntity updatedRentalEntity = new RentalEntity(rentalEntity.getId(), createDto.getName(), rentalEntity.getPicture(),
+        createDto.getDescription(), createDto.getSurface(), createDto.getPrice(), rentalEntity.getCreated_at(), rentalEntity.getUpdated_at(), rentalEntity.getMessages() ,
         rentalEntity.getOwner());
       updatedRentalEntity.setUpdated_at(LocalDateTime.now());
 			rentalRepository.save(updatedRentalEntity);
