@@ -5,6 +5,7 @@ import com.chatop.backend.dtos.*;
 import com.chatop.backend.mappers.UserMapper;
 import com.chatop.backend.models.User;
 import com.chatop.backend.services.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,12 +42,8 @@ public class LoginController {
         return ResponseEntity.ok(new TokenDTO(token));
     }
 
-    @GetMapping("/home")
-    public ResponseEntity<TextResponseDTO> homeSweetHome(){
-        return ResponseEntity.ok(new TextResponseDTO("Hi home !"));
-    }
 
-
+    @SecurityRequirement(name = "Authorization")
     @GetMapping("/me")
     public ResponseEntity<UserInfoDTO> getUser(@RequestHeader("Authorization") String requestTokenHeader) {
       String username = tokenService.decodeTokenUsername(requestTokenHeader);

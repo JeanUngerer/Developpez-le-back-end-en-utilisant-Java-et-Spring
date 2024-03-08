@@ -8,6 +8,7 @@ import com.chatop.backend.dtos.TextResponseDTO;
 import com.chatop.backend.mappers.RentalMapper;
 import com.chatop.backend.services.RentalService;
 import com.chatop.backend.services.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 @RequestMapping("rentals")
+@SecurityRequirement(name = "Authorization")
 public class RentalController {
 
 	@Autowired
@@ -32,6 +34,7 @@ public class RentalController {
   TokenService tokenService;
 
 	private RentalMapper rentalMapper;
+
 
 	@PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
 	@GetMapping("")

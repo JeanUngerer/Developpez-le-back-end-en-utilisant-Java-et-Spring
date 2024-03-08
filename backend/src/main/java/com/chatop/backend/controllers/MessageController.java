@@ -4,6 +4,7 @@ import com.chatop.backend.dtos.MessageDTO;
 import com.chatop.backend.dtos.TextResponseDTO;
 import com.chatop.backend.mappers.MessageMapper;
 import com.chatop.backend.services.MessageService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,6 +21,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 @RequestMapping("messages")
+@SecurityRequirement(name = "Authorization")
 public class MessageController {
 
 	@Autowired

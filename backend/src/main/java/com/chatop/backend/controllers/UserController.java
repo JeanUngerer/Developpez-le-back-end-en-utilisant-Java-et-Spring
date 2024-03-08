@@ -3,6 +3,7 @@ package com.chatop.backend.controllers;
 import com.chatop.backend.dtos.UserDTO;
 import com.chatop.backend.mappers.UserMapper;
 import com.chatop.backend.services.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,6 +20,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 @RequestMapping("user")
+@SecurityRequirement(name = "Authorization")
 public class UserController {
 
 	@Autowired
