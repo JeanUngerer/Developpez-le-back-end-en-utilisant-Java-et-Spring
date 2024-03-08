@@ -33,7 +33,10 @@ For testing purposes, the database is emptied every time you run the app you don
     hibernate:
       ddl-auto: create-drop
 
+Setup your database username and password in the following environment variables
 
+    DB_USER
+    DB_PASSWORD
 
 Go to backend folder
 
